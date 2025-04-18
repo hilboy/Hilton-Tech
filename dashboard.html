@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #0f0c29, #302b63, #24243e);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+      min-height: 100vh;
+      background-size: cover;
+      animation: bgMove 15s linear infinite alternate;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h2 {
+      text-align: center;
+      color: #00fff7;
+    }
+
+    .input-group {
+      margin: 15px 0;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: linear-gradient(to right, #00f260, #0575e6);
+      border: none;
+      color: white;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .tasks {
+      margin-top: 20px;
+    }
+
+    .task {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .task input {
+      margin-right: 10px;
+    }
+
+    .referral {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .referral input {
+      width: 80%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 0.9rem;
+    }
+
+    .referral button {
+      margin-top: 10px;
+      background-color: #ff416c;
+      background-image: linear-gradient(to right, #ff4b2b, #ff416c);
+      border: none;
+      padding: 10px 15px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Welcome, <span id="userDisplay"></span>!</h2>
+
+    <div class="input-group">
+      <input type="text" id="wallet" placeholder="Enter your wallet address..." />
+    </div>
+    <button class="btn" onclick="claimAirdrop()">Claim Airdrop</button>
+
+    <div class="tasks">
+      <h3>Tasks</h3>
+      <div class="task"><input type="checkbox" id="task1" /> Join our Telegram</div>
+      <div class="task"><input type="checkbox" id="task2" /> Follow us on Twitter</div>
+      <div class="task"><input type="checkbox" id="task3" /> Like and Retweet pinned post</div>
+    </div>
+
+    <div class="referral">
+      <h3>Your Referral Link</h3>
+      <input type="text" id="refLink" readonly />
+      <button onclick="copyRef()">Copy</button>
+    </div>
+  </div>
+
+  <script>
+    const username = localStorage.getItem("username");
+    document.getElementById("userDisplay").innerText = username ?? "User";
+
+    const refLink = `${window.location.origin}/signup.html?ref=${username}`;
+    document.getElementById("refLink").value = refLink;
+
+    function copyRef() {
+      const input = document.getElementById("refLink");
+      input.select();
+      input.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      alert("Referral link copied!");
+    }
+
+    function claimAirdrop() {
+      const wallet = document.getElementById("wallet").value.trim();
+      if (wallet === "") {
+        alert("Please enter a wallet address");
+        return;
+      }
+
+      const tasksCompleted = document.getElementById("task1").checked &&
+                             document.getElementById("task2").checked &&
+                             document.getElementById("task3").checked;
+
+      if (!tasksCompleted) {
+        alert("Please complete all tasks to claim your airdrop.");
+        return;
+      }
+
+      alert("Airdrop claimed successfully!");
+    }
+  </script>
+
+</body>
+</html>
