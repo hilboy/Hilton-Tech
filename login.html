@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ff6a00, #ee0979);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .login-form {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 2rem;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 10px 0;
+      border: 1px solid #aaa;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #ff6a00;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ee0979;
+    }
+
+    p {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-form">
+    <h2>Login</h2>
+    <input type="text" id="loginUsername" placeholder="Enter username" />
+    <input type="password" id="loginPassword" placeholder="Enter password" />
+    <button onclick="login()">Login</button>
+    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById("loginUsername").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+
+      if (username === "" || password === "") {
+        alert("Please fill in both fields.");
+        return;
+      }
+
+      const storedUsername = localStorage.getItem("username");
+      const storedPassword = localStorage.getItem("password");
+
+      // Simple password checking (matching hash)
+      const hashedPassword = btoa(password); // Re-encode password for comparison
+
+      if (username === storedUsername && hashedPassword === storedPassword) {
+        alert("Login successful!");
+        window.location.href = "dashboard.html"; // Redirect to dashboard
+      } else {
+        alert("Invalid username or password.");
+      }
+    }
+  </script>
+
+</body>
+</html>
